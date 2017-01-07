@@ -1,0 +1,68 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * Install, update and uninstall functions for the module
+ *
+ * In this version we demonstrate the use of hook_update_N() to add
+ * a new database table.
+ *
+ */
+
+/**
+ * Implements hook_install().
+ */
+function csv_database_query_install() {
+    $schema['csv_database_query_fields'] = array(
+        'description' => 'Stores the dropdown options for each of the selected fields',
+        'fields' => array(
+            'name' => array(
+                'description' => 'Name of field.',
+                'type' => 'varchar',
+                'not null' => TRUE,
+                'length' => '100',
+            ),
+            'options' => array(
+                'description' => 'serialized array of options for the field',
+                'type' => 'text',
+                'not null' => FALSE,
+            ),
+            'display_type' => array(
+                'description' => 'Type of display - show only or dropdown.',
+                'type' => 'varchar',
+                'not null' => TRUE,
+                'length' => '10',
+            ),
+            'column_heading' => array(
+                'description' => 'Column heading for display.',
+                'type' => 'varchar',
+                'not null' => FALSE,
+                'length' => '25',
+            ),
+            'display_order' => array(
+                'description' => 'Order for display output.',
+                'type' => 'int',
+                'not null' => FALSE,
+            ),
+        ),
+        'primary key' => array('name'),
+    );
+
+    db_create_table('csv_database_query_fields', $schema['csv_database_query_fields']);
+    return 'Files table created';
+}
+
+
+/**
+ * Implements hook_uninstall().
+ */
+function csv_database_query_uninstall() {
+  $tables = array('csv_database_query_fields', 'csv_database_query_table');
+  foreach ($tables as $table) {
+    if (db_table_exists($table)) {
+        db_drop_table($table); 
+    }    
+  }
+}
+

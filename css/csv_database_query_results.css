@@ -1,0 +1,15 @@
+.ncaoc_cases_results_headings {
+   width:10px;
+}
+
+.ncaoc_cases_results_rows {
+
+}
+
+.ncaoc_cases_results_columns {
+    width:10px;
+
+}
+
+tr:nth-child(even) {background-color: #BAB3B3}
+

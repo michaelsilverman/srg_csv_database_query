@@ -1,0 +1,51 @@
+## YAML Template.
+---
+drupal.csv_database_query_admin_form:
+  version: 1.x
+  css:
+    theme:
+      css/csv_database_query_admin_form.css: {}
+        
+drupal.csv_database_query_query:
+  version: 1.x
+  css:
+    theme:
+      css/csv_database_query_query.css: {}
+  js:
+    js/csv_database_query_query.js: {}
+  dependencies:
+    - core/jquery
+
+        
+drupal.csv_database_query_results:
+  version: 1.x
+  css:
+    theme:
+      css/csv_database_query_results.css: {}
+      css/datatables/jquery.dataTables.css: {}
+
+  js:
+    js/datatables/jquery.dataTables.js: {}
+    js/csv_database_query_results.js: {}
+  dependencies:
+    - core/jquery
+    
+drupal.csv_database_query_results_ajax:
+  version: 1.x
+  css:
+    theme:
+      css/csv_database_query_results.css: {}
+      css/datatables/dataTables.bootstrap.css: {}
+      css/datatables/dataTables.foundation.css: {}
+      css/datatables/dataTables.jqueryui.css: {}
+      css/datatables/jquery.dataTables.css: {}
+      css/datatables/jquery.dataTables_themeroller.css: {}
+      
+  js:
+    js/datatables/dataTables.bootstrap.js: {}
+    js/datatables/dataTables.foundation.js: {}
+    js/datatables/dataTables.jqueryui.js: {}
+    js/datatables/jquery.dataTables.js: {}
+    js/csv_database_query_results_ajax.js: {}
+  dependencies:
+    - core/jquery

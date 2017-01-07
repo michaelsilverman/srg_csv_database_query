@@ -1,0 +1,30 @@
+{# empty Twig template #}
+{{ attach_library('csv_database_query/drupal.csv_database_query_results') }}
+Search criteria:<br>
+{% for select in  variables.selects %}
+    <p>{{ select.field|e }} EQUALS "{{ select.value|e }}"</p>
+{% endfor %}
+{% for filter in  variables.filters %}
+    <p>{{ filter.field|e }} {{ filter.operator|e }} "{{ filter.value|e }}"</p>
+{% endfor %}
+
+<p>Matching records: {{ variables.results_count }}</p>
+<table id="myTable">
+    <thead>
+    {% for field,heading in  variables.headings %}
+        <th class="ncaoc_cases_results_headings" id="{{field}}">{{ heading|e }}</th>
+    {% endfor %}
+    </thead>
+    <tbody>
+    {% for cases in  variables.cases %}
+        <tr class="ncaoc_cases_results_rows">
+            {% for case in  cases %}
+
+                <td class="ncaoc_cases_results_columns">{{ case|e }}</td>
+            {% endfor %}
+        </tr>    
+    {% endfor %}
+    </tbody>
+</table> 
+
+

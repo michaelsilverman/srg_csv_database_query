@@ -1,0 +1,35 @@
+<?php
+function csv_database_query_theme() {
+    return array(
+        'converter' => array(
+            'variables' => array('variables' => NULL),
+            'render element' => 'variables',
+            'template' => 'convert_results',
+        ),
+        'results' => array(
+            'variables' => array('variables' => NULL),
+            'render element' => 'variables',
+            'template' => 'query_results',
+        ),
+        'test1' => array(
+            'variables' => array('variables' => NULL),
+            'render element' => 'variables',
+            'template' => 'test1',
+        )
+    );
+}
+
+function csv_database_query_menu() {
+    $items['admin/config/content/csv_database_query'] = array(
+        'title'=> 'Code snippets',
+        'description' => 'Configure',
+        'route_name' => 'csv_database_query_.adminForm',
+    );
+    return $items;
+}
+
+function csv_database_query_element_info_alter(array &$types) {
+  if (isset($types['textfield'])) {
+    $types['textfield']['#attached']['library'][] = 'csv_database_query_/drupal.csv_database_query_admin_form';
+  }
+}

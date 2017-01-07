@@ -1,0 +1,82 @@
+csv_database_query_.uploadFile:
+  path: '/csv_database_query/upload'
+  defaults:
+    _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::uploadFile'
+    _title: 'upload'
+  requirements:
+    _permission: 'access content'
+    
+csv_database_query.convertFile:
+  path: '/csv_database_query/convert'
+  defaults:
+    _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::convertFile'
+    _title: 'Convert CSV records to Database'
+  requirements:
+    _permission: 'access content'
+    
+ncaoc_pending_cases.queryTable:    
+  path: '/csv_database_query/api/query'
+  defaults:
+    _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::queryTable'
+    _title: 'query'
+  requirements:
+    _permission: 'access content'
+    
+ncaoc_pending_cases.queryAPI:    
+  path: '/csv_database_query/api/query'
+  defaults:
+    _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::queryAPI'
+    _title: 'query'
+  requirements:
+    _permission: 'access content'
+    
+    
+ncaoc_pending_cases.getCountyDistrictMapAPI:    
+  path: '/cvs_database_query/api/county_district_map'
+  defaults:
+    _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::getDistrictCountyMap'
+    _title: 'query'
+  requirements:
+    _permission: 'access content'    
+
+    
+csv_database_query.adminForm:
+  path: '/csv_database_query/admin'
+  defaults:
+    _form: 'Drupal\csv_database_query\Form\csv_databaseAdminForm'
+    _title: 'Pending Cases Field Administration'
+  requirements:
+    _permission: 'access content'
+    
+csv_database_query.queryForm:
+  path: '/csv_database_query/query'
+  defaults:
+    _form: 'Drupal\csv_database_query\Form\csv_databaseQueryForm'
+    _title: 'Pending Cases Query'
+  requirements:
+    _permission: 'access content'
+    
+csv_database_query.queryResults:
+  path: '/csv_database_query/results'
+  defaults:
+    _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::queryResults'
+    _title: 'Pending Cases Results'
+  requirements:
+    _permission: 'access content'
+    
+csv_database_query_.queryResultsNext:
+  path: '/csv_database_query/resultsnext'
+  defaults:
+    _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::queryResultsNext'
+    _title: 'Pending Cases Results'
+  requirements:
+    _permission: 'access content'
+    
+csv_database_query.testpage:
+  path: '/ncaoc_pending_cases/testpage'
+  defaults:
+    _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::testPage'
+    _title: 'Test Page'
+  requirements:
+    _permission: 'access content'     
+    

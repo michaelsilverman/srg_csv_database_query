@@ -1,0 +1,19 @@
+{{ attach_library('csv_database_query/drupal.pending_cases_results_ajax') }}
+
+<table id="myTable">
+    <thead>
+    {% for field,heading in  variables.headings %}
+        <th class="ncaoc_cases_results_headings" id="{{field}}">{{ heading|e }}</th>
+    {% endfor %}
+    </thead>
+    <tbody>
+    {% for cases in  variables.cases %}
+        <tr class="ncaoc_cases_results_rows">
+            {% for case in  cases %}
+
+                <td class="ncaoc_cases_results_columns">{{ case|e }}</td>
+            {% endfor %}
+        </tr>    
+    {% endfor %}
+    </tbody>
+</table>
