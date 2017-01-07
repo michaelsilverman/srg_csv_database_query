@@ -10,7 +10,7 @@ csv_database_query.convertFile:
   path: '/csv_database_query/convert'
   defaults:
     _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::convertFile'
-    _title: 'Convert CSV records to Database'
+    _title: 'Convert CSV records to database table'
   requirements:
     _permission: 'access content'
     
@@ -44,7 +44,7 @@ csv_database_query.adminForm:
   path: '/csv_database_query/admin'
   defaults:
     _form: 'Drupal\csv_database_query\Form\csv_databaseAdminForm'
-    _title: 'Pending Cases Field Administration'
+    _title: 'CSV field administration'
   requirements:
     _permission: 'access content'
     
@@ -52,7 +52,7 @@ csv_database_query.queryForm:
   path: '/csv_database_query/query'
   defaults:
     _form: 'Drupal\csv_database_query\Form\csv_databaseQueryForm'
-    _title: 'Pending Cases Query'
+    _title: 'Database Query'
   requirements:
     _permission: 'access content'
     
@@ -60,7 +60,7 @@ csv_database_query.queryResults:
   path: '/csv_database_query/results'
   defaults:
     _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::queryResults'
-    _title: 'Pending Cases Results'
+    _title: 'Query Results'
   requirements:
     _permission: 'access content'
     
