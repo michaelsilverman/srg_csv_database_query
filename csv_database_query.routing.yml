@@ -1,58 +1,62 @@
-csv_database_query_.uploadFile:
+csv_database_query.uploadFile:
   path: '/csv_database_query/upload'
   defaults:
-    _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::uploadFile'
-    _title: 'upload'
+    _form: 'Drupal\csv_database_query\Form\csv_databaseUploadForm'
+    _title: 'Upload CSV file'
   requirements:
     _permission: 'access content'
     
 csv_database_query.convertFile:
-  path: '/csv_database_query/convert'
+  path: '/csv_database_query/convert/{fid}/{table_name}'
   defaults:
     _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::convertFile'
     _title: 'Convert CSV records to database table'
+    fid: ''
+    table_name: ''
   requirements:
     _permission: 'access content'
     
-ncaoc_pending_cases.queryTable:    
-  path: '/csv_database_query/api/query'
+csv_database_query.queryTable:
+  path: '/csv_database_query/api/query/{table_name}'
   defaults:
     _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::queryTable'
     _title: 'query'
+    table_name: ''
   requirements:
     _permission: 'access content'
     
-ncaoc_pending_cases.queryAPI:    
-  path: '/csv_database_query/api/query'
+csv_database_query.queryAPI:
+  path: '/csv_database_query/api/query/{table_name}'
   defaults:
     _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::queryAPI'
     _title: 'query'
+    table_name: ''
   requirements:
     _permission: 'access content'
     
-    
-ncaoc_pending_cases.getCountyDistrictMapAPI:    
-  path: '/cvs_database_query/api/county_district_map'
-  defaults:
-    _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::getDistrictCountyMap'
-    _title: 'query'
-  requirements:
-    _permission: 'access content'    
-
-    
-csv_database_query.adminForm:
-  path: '/csv_database_query/admin'
+csv_database_query.adminFieldsForm:
+  path: '/csv_database_query/admin/{table_name}'
   defaults:
     _form: 'Drupal\csv_database_query\Form\csv_databaseAdminForm'
+    _title: 'CSV field administration'
+    table_name: ''
+  requirements:
+    _permission: 'access content'
+
+csv_database_query.databaseSelectForm:
+  path: '/csv_database_query/select_table'
+  defaults:
+    _form: 'Drupal\csv_database_query\Form\csv_databaseSelectForm'
     _title: 'CSV field administration'
   requirements:
     _permission: 'access content'
     
 csv_database_query.queryForm:
-  path: '/csv_database_query/query'
+  path: '/csv_database_query/query/{table_name}'
   defaults:
     _form: 'Drupal\csv_database_query\Form\csv_databaseQueryForm'
     _title: 'Database Query'
+    table_name: ''
   requirements:
     _permission: 'access content'
     
@@ -64,7 +68,7 @@ csv_database_query.queryResults:
   requirements:
     _permission: 'access content'
     
-csv_database_query_.queryResultsNext:
+csv_database_query.queryResultsNext:
   path: '/csv_database_query/resultsnext'
   defaults:
     _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::queryResultsNext'
@@ -73,10 +77,10 @@ csv_database_query_.queryResultsNext:
     _permission: 'access content'
     
 csv_database_query.testpage:
-  path: '/ncaoc_pending_cases/testpage'
+  path: '/csv_database_query/testpage'
   defaults:
     _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::testPage'
     _title: 'Test Page'
   requirements:
-    _permission: 'access content'     
+    _permission: 'view csv_database_query'
     

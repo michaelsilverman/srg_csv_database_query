@@ -8,7 +8,7 @@
          $('#myTable').DataTable({
              serverSide: true,
              ajax: {
-                 url: '/ncaoc_pending_cases/api/query',
+                 url: '/csv_database_query/api/query',
                  type: 'POST'
              },
              "columns": [

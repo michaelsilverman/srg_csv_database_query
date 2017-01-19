@@ -34,7 +34,7 @@ class csv_databaseAdminFormState  extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('ncaoc_pending_cases.settings');
+    $config = $this->config('csv_database_query.settings');
    // dpm($config, 'confg');
       $form['hello_thing'] = array(
         '#type' => 'textfield',

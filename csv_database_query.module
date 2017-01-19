@@ -23,13 +23,13 @@ function csv_database_query_menu() {
     $items['admin/config/content/csv_database_query'] = array(
         'title'=> 'Code snippets',
         'description' => 'Configure',
-        'route_name' => 'csv_database_query_.adminForm',
+        'route_name' => 'csv_database_query.adminForm',
     );
     return $items;
 }
 
 function csv_database_query_element_info_alter(array &$types) {
   if (isset($types['textfield'])) {
-    $types['textfield']['#attached']['library'][] = 'csv_database_query_/drupal.csv_database_query_admin_form';
+    $types['textfield']['#attached']['library'][] = 'csv_database_query/drupal.csv_database_query_admin_form';
   }
 }

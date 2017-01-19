@@ -1,0 +1,10 @@
+view csv_database_query:
+  title: 'View cvs query'
+  description: 'This is the view permission'
+access csv_database_query report:
+  title: 'Access report'
+  description: 'This is the report permission'
+administer csv_database_query:
+  title: 'Administer query'
+  description: 'Access the administrative settings page'
+  restrict access: true

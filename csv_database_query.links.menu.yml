@@ -1,0 +1,18 @@
+csv_database_query.upload:
+  title: 'Upload file'
+  description: 'Upload CSV file'
+  route_name: csv_database_query.uploadFile
+  weight: 10
+  menu_name: main
+csv_database_query.query:
+  title: 'Query'
+  description: 'Perform query request'
+  route_name: csv_database_query.queryForm
+  weight: 30
+  menu_name: main
+csv_database_query.manageTable:
+  title: 'Manage Fields'
+  description: 'Manage table fields'
+  route_name: csv_database_query.databaseSelectForm
+  weight: 20
+  menu_name: main

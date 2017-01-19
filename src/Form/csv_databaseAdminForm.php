@@ -34,13 +34,18 @@ class csv_databaseAdminForm  extends FormBase {
    /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state, $table_name = null) {
     $config = $this->config('csv_database_query.settings');
+    $form['table_name'] = array(
+        '#type' => 'hidden',
+        '#default_value' => $table_name,
+    );
+
     $form['fields_fieldset'] = array(
         '#type' => 'fieldset',
         '#title' => 'Select Dropdown Fields',   
     );
-    $fields = unserialize(\Drupal::state()->get('csv_database_query_fields'));
+    $fields = unserialize(\Drupal::state()->get('csv_database_fields_table_'.$table_name));
     // create array of each field in the database
     //  if the name exists in both set the checkbox of the field
     //  if it exists in the DB but not the list then delete it from the DB
@@ -48,7 +53,7 @@ class csv_databaseAdminForm  extends FormBase {
   
    // TODO need to call function in Controller 
     $db = \Drupal::database();
-    $query = $db->select('csv_database_query_fields', 'fields')
+    $query = $db->select('csv_database_fields_table_'.$table_name, 'fields')
                 ->fields('fields', array('name', 'display_type', 'column_heading'));
   //  $query->orderby('name', "ASC");
     $db_names = $query->execute()->fetchall();
@@ -102,11 +107,13 @@ class csv_databaseAdminForm  extends FormBase {
         }
     }
 
-    foreach ($db_names as $db_name) {
-        if (in_array($db_name->name, $fields)) {
-            $form['fields_fieldset'][$field]["#attributes"]['checked'] = TRUE;    
-        }               
-    }
+ //   foreach ($db_names as $db_name) {
+ //       dpm($fields, $db_name->name);
+ //       dpm($field, 'field');
+ //       if (in_array($db_name->name, $fields)) {
+ //           $form['fields_fieldset'][$field]["#attributes"]['checked'] = TRUE;
+ //       }
+ //   }
     
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = array(
@@ -138,37 +145,39 @@ public function validateForm(array &$form, FormStateInterface $form_state) {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // remove all records from csv_database_query_fields table
     $fields = $form_state->getValue('fields_fieldset');
+      $db_table = 'csv_database_query_table_'.$form_state->getValue('table_name');
+      $fields_table = 'csv_database_fields_table_'.$form_state->getValue('table_name');
     foreach($fields as $field_name => $field_info) {
-        $this->build_field_select_table($field_name, $field_info);
+        $this->build_field_select_table($db_table, $fields_table, $field_name, $field_info);
     }
   }
-  private function build_field_select_table($name, $field_info) {
+  private function build_field_select_table($db_table, $fields_table, $field_name, $field_info) {
    // read record from DB, if it does not exist, perform insert
    // if it exists check of $display equals t  
-      
+
       $field_array = array(
         'column_heading' => $field_info['column_heading'],  
         'display_type' => $field_info['display'],
         'display_order' => $field_info['display_order'],
     );
+
       $db = \Drupal::database();
-      $query = $db->select('csv_database_query_fields', 'fields')
+      $query = $db->select($fields_table, 'fields')
         ->fields('fields')      
-        ->condition('name', $name, '=');
+        ->condition('name', $field_name, '=');
 
       $result = $query->execute()->fetchall();
-      debug($result, 'result');
       $changed = TRUE;
       if (empty($result)) {
-          $query = $db->insert("csv_database_query_fields");
-          $field_array['name'] = $name;
+          $query = $db->insert($fields_table);
+          $field_array['name'] = $field_name;
       } else {
   
-          $query = $db->update("csv_database_query_fields")
-            ->condition('name', $name, '=');
+          $query = $db->update($fields_table)
+            ->condition('name', $field_name, '=');
           if ($result[0]->display_type == $field_info['display'])   {
               $changed = FALSE; 
-      }
+          }
       }
   //  if ($name == 'NINETY_DAY_FAILURE_DATE') {
   //      $field_array['display_type'] = 'hide';
@@ -178,16 +187,15 @@ public function validateForm(array &$form, FormStateInterface $form_state) {
     if ($changed) {
         $field_array['options'] = NULL;
         if ($field_info['display'] == 'select') {
-            $record_count = $this::create_table_index($name);
+            $record_count = $this::create_table_index($field_name);
             if ($record_count < 200) {
-              $field_array['options'] = serialize(\Drupal\csv_database_query\Controller\csv_databaseController::findUniqueValues($name));
+              $field_array['options'] = serialize(\Drupal\csv_database_query\Controller\csv_databaseController::findUniqueValues($db_table, $field_name));
             } else {
                  $field_array['options'] = NULL;
                  $field_array['display_type'] = 'filter';
-                 drupal_set_message($name.' has too many distinct entries, '.$record_count. ', to be eligible as DROPDOWN');
+                 drupal_set_message($field_name.' has too many distinct entries, '.$record_count. ', to be eligible as DROPDOWN');
             }  
         }
-         
     }
       $query->fields($field_array)->execute(); 
       // build DB with primary key as read 

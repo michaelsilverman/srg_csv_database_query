@@ -26,11 +26,21 @@ class csv_databaseQueryForm  extends FormBase {
    /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state, $table_name = null) {
     $config = $this->config('csv_database_query_.settings');
     // TODO: change to use getFieldsList()???
+    $db_table = 'csv_database_query_table_'.$table_name;
+    $fields_table = 'csv_database_fields_table_'.$table_name;
+    $form['db_table'] = array(
+        '#type' => 'hidden',
+        '#default_value' => $db_table,
+    );
+    $form['fields_table'] = array(
+        '#type' => 'hidden',
+        '#default_value' => $fields_table,
+    );
     $db = \Drupal::database();
-    $query = $db->select('csv_database_query_fields', 'fields')
+    $query = $db->select($fields_table, 'fields')
         ->fields('fields')
         ->orderby('display_order');
     $db_names = $query->execute()->fetchall();
@@ -113,7 +123,7 @@ class csv_databaseQueryForm  extends FormBase {
       '#value' => $this->t('Perform search'),
       '#button_type' => 'primary',
     );
-    $form['#attached']['library'][] = 'ncaoc_pending_cases/drupal.pending_cases_query';
+    $form['#attached']['library'][] = 'csv_database_query/drupal.pending_cases_query';
     $form['#theme'] = 'system_config_form';
     return $form;
   }
@@ -139,6 +149,8 @@ class csv_databaseQueryForm  extends FormBase {
         }
         
     }
+    $parameters['db_table'] = $form_state->getValue('db_table');
+    $parameters['fields_table'] = $form_state->getValue('fields_table');
     $parameters['conditions'] = $conditions;
     $form_state->setRedirect('csv_database_query.queryResults', $parameters);
   }
