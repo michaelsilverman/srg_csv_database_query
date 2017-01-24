@@ -34,7 +34,7 @@ class csv_databaseController {
         $file_uri = $file_info['uri'];
         $vars['start_time'] = new \DateTime('NOW');
         $count = 0;
-        $max_recs = 1000000;
+        $max_recs = 20000;
         $timer = 0;
         $db_table = 'csv_database_query_table_'.$table_name;
         $fields_table = 'csv_database_fields_table_'.$table_name;
@@ -42,6 +42,8 @@ class csv_databaseController {
     // delete and truncate table
         $connection = \Drupal\Core\Database\Database::getConnection()->schema();
         $connection->dropTable($db_table);
+        $connection->dropTable($fields_table);
+    //    $db_conn = \Drupal\Core\Database\Database::getConnection();
         $db = \Drupal::database();
    
         // TODO: need to rebuild table without losing current data
@@ -60,6 +62,8 @@ class csv_databaseController {
             );
         }
         $connection->createTable($db_table, $spec);
+  //      dpm($spec, 'spec');
+  //      sleep(20);
         if ($handle) {
             while ((($rec_array = fgetcsv($handle)) !== false) && ($count < $max_recs)) {
                 if ($timer == 50000) {
@@ -74,14 +78,19 @@ class csv_databaseController {
                    $fields_array[$field_name] = $rec_array[$index];  
                    $index++;
                 }
+//                $insert = $db->insert($db_table)->fields($fields_array);
+//                $query = $insert->execute();
 
                 $query = $db->insert($db_table)->fields($fields_array)->execute();
+          //      $db_conn->insert($db_table)->fields($fields_array)->execute();
+      //          dpm($query, 'query1');
+      //          dpm($fields_array, 'fields array');
             }
             if (!feof($handle)) {
                echo "Error: unexpected fgets() fail\n";
             }
         }
-      
+     //   $db->commit();
         fclose($handle);
         $vars['file_name'] = $file_uri;
         $vars['table_name'] = $db_table;
@@ -103,9 +112,6 @@ class csv_databaseController {
         $results = array();
         $results['record_start'] = $start;
         $results['record_limit'] = $limit;
-
-
-
         $db = \Drupal::database();
      //   $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
      //   $uid = \Drupal::currentUser()->id();
@@ -430,12 +436,25 @@ class csv_databaseController {
                         'column_heading' => $column_heading, 'display_order' => $display_order); 
             }
         }
-        $db->truncate($db_table)->execute();
+        $db->truncate($fields_table)->execute();
         foreach ($db_array as $field_array) {
             $query = $db->insert($fields_table)->fields($field_array)->execute();
         }
         return;
-    }   
-    
+    }
+
+
 }
+
+/*
+use Drupal\Core\Database;
+use Drupal\Core\Database\Connection;
+$table_name = 'yyy1';
+    // delete and truncate table
+$connection = \Drupal\Core\Database\Database::getConnection()->schema();
+       $db_table = 'csv_database_query_table_'.$table_name;
+        $fields_table = 'csv_database_fields_table_'.$table_name;
+       $connection->dropTable($db_table);
+ $connection->dropTable($fields_table);
+ */
 

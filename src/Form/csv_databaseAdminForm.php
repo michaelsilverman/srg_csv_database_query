@@ -187,7 +187,7 @@ public function validateForm(array &$form, FormStateInterface $form_state) {
     if ($changed) {
         $field_array['options'] = NULL;
         if ($field_info['display'] == 'select') {
-            $record_count = $this::create_table_index($field_name);
+            $record_count = $this::create_table_index($db_table, $field_name);
             if ($record_count < 200) {
               $field_array['options'] = serialize(\Drupal\csv_database_query\Controller\csv_databaseController::findUniqueValues($db_table, $field_name));
             } else {
@@ -201,8 +201,8 @@ public function validateForm(array &$form, FormStateInterface $form_state) {
       // build DB with primary key as read 
   }
   
-  private function create_table_index($field) {
-    $table = "csv_database_query_table";
+  private function create_table_index($table, $field) {
+  //  $table = "csv_database_query_table";
     $db = \Drupal::database();
     
     

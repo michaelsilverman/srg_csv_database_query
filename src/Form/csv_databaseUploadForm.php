@@ -92,8 +92,8 @@ class csv_databaseUploadForm  extends FormBase {
     private static function writeCSVTableNode($table_name) {
 
 // Create file object from remote URL.
-        $data = file_get_contents('https://www.drupal.org/files/druplicon.small_.png');
-        $file = file_save_data($data, 'public://druplicon.png', FILE_EXISTS_REPLACE);
+      //  $data = file_get_contents('https://www.drupal.org/files/druplicon.small_.png');
+      //  $file = file_save_data($data, 'public://druplicon.png', FILE_EXISTS_REPLACE);
 
 // Create node object with attached file.
         $node = Node::create([

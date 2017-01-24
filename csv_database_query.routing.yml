@@ -67,20 +67,3 @@ csv_database_query.queryResults:
     _title: 'Query Results'
   requirements:
     _permission: 'access content'
-    
-csv_database_query.queryResultsNext:
-  path: '/csv_database_query/resultsnext'
-  defaults:
-    _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::queryResultsNext'
-    _title: 'Pending Cases Results'
-  requirements:
-    _permission: 'access content'
-    
-csv_database_query.testpage:
-  path: '/csv_database_query/testpage'
-  defaults:
-    _controller: 'Drupal\csv_database_query\Controller\csv_databaseController::testPage'
-    _title: 'Test Page'
-  requirements:
-    _permission: 'view csv_database_query'
-    
